@@ -17,7 +17,7 @@ public class HotChicken extends Sandwich{
         toppings.add(new RegularTopping("Tomato"));
         toppings.add(new RegularTopping("Onion"));
         toppings.add(new RegularTopping("Peppers"));
-        toppings.add(new Sauces("Thousand Islands"));
+        toppings.add(new Sauces(sauceId, "Thousand Islands"));
         return toppings;
     }
 }
