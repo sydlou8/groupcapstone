@@ -1,0 +1,31 @@
+==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+Sandwich                          Large     $16.15
+	Toppings: 
+	Premium Toppings
+		- Provolone
+		-- add Extra
+		- Bacon
+		-- add Extra
+	Regular Toppings
+		- Mushrooms
+		- Jalapenos
+		- Cucumbers
+		- Tomatoes
+		- Lettuce
+		- Onions
+		- Guacamole
+		- Peppers
+		- Pickles
+	Sauces
+		None
+	Sides
+		None
+	Toasted
+Cola                              Medium    $2.50
+Lays                                        $1.50
+..................................................
+Total                                       $20.15

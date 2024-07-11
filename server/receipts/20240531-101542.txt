@@ -1,0 +1,45 @@
+==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+Sandwich                          Medium    $12.10
+	Toppings: 
+	Premium Toppings
+		- Chicken
+		-- add Extra
+		- American
+		-- add Extra
+	Regular Toppings
+		- Lettuce
+		- Mushrooms
+		- Onions
+		- Peppers
+		- Tomatoes
+		- Pickles
+		- Jalapenos
+		- Cucumbers
+		- Guacamole
+	Sauces
+		- Ranch
+	Sides
+		None
+	Toasted
+Sandwich                          Large     $13.75
+	Toppings: 
+	Premium Toppings
+		- American
+		-- Standard
+		- Steak
+		-- Standard
+	Regular Toppings
+		- Peppers
+	Sauces
+		- Mayo
+	Sides
+		None
+	Toasted
+Ginger Ale                        Large     $3.00
+Doritos                                     $1.50
+..................................................
+Total                                       $30.35

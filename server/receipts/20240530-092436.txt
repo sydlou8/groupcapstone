@@ -1,0 +1,33 @@
+==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+SunChips                                    $1.50
+Lemon Lime                        Large     $3.00
+Sandwich                          Medium    $12.10
+	Toppings: 
+	Premium Toppings
+		- Chicken
+		-- add Extra
+		- Swiss
+		-- add Extra
+	Regular Toppings
+		- Cucumbers
+		- Guacamole
+		- Mushrooms
+		- Lettuce
+		- Tomatoes
+		- Peppers
+		- Onions
+		- Pickles
+		- Jalapenos
+	Sauces
+		- Ketchup
+		- Ranch
+		- ThousandIslands
+	Sides
+		None
+	Toasted
+..................................................
+Total                                       $16.60

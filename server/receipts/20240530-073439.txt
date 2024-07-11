@@ -1,0 +1,21 @@
+    ``1`==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+Sandwich                          Large     $13.75
+	Toppings: 
+	Premium Toppings
+		- American
+		-- Standard
+		- Steak
+		-- Standard
+	Regular Toppings
+		- Peppers
+	Sauces
+		- Mayo
+	Sides
+		None
+	Toasted
+..................................................
+Total                                       $13.75

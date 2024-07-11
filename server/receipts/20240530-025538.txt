@@ -1,0 +1,24 @@
+==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+Sandwich                          Large     $13.75
+	Toppings: 
+	Premium Toppings
+		- American
+		-- Standard
+		- Chicken
+		-- Standard
+	Regular Toppings
+		- Onion
+		- Lettuce
+		- Peppers
+		- Tomato
+	Sauces
+		- Thousand Islands
+	Sides
+		None
+	Toasted
+..................................................
+Total                                       $13.75

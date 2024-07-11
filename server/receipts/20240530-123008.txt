@@ -1,0 +1,37 @@
+==================================================
+                   Your Receipt
+==================================================
+Your Current Order Details: 
+
+Sandwich                          Large     $13.75
+	Toppings: 
+	Premium Toppings
+		- American
+		-- Standard
+		- Steak
+		-- Standard
+	Regular Toppings
+		- Peppers
+	Sauces
+		- Mayo
+	Sides
+		None
+	Toasted
+Sandwich                          Large     $13.75
+	Toppings: 
+	Premium Toppings
+		- Bacon
+		-- Standard
+		- Cheddar
+		-- Standard
+	Regular Toppings
+		- Tomato
+		- Lettuce
+	Sauces
+		- Ranch
+	Sides
+		None
+	Toasted
+Root Beer                         Large     $3.00
+..................................................
+Total                                       $30.50
