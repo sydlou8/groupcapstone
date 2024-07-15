@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin
 public class RegularToppingsController {
 
-    private RegularToppingsDao regularToppingsDao = null;
+    private RegularToppingsDao regularToppingsDao;
 
     @Autowired
     public RegularToppingsController(RegularToppingsDao regularToppingsDao)
