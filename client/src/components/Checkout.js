@@ -1,22 +1,27 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import ShoppingCart from './ShoppingCart';
 
-const Checkout = () => {
+const Checkout = ({ cartItems }) => {
   const history = useHistory();
 
   const handleCheckout = () => {
-    // Code to handle the submission to backend
-    console.log('Order submitted!');
-    // After submission, redirect the user to confirmation page/reset the cart
+    // Handle the submission to your backend
+    console.log('Order submitted!', cartItems);
+    // Redirect the user to a confirmation page or reset the cart
     history.push('/confirmation');
   };
 
   return (
     <Container>
       <h1>Checkout</h1>
-      <ShoppingCart />
+      <ListGroup>
+        {cartItems.map((item, index) => (
+          <ListGroup.Item key={index}>
+            {item.type ? `${item.type}: ${item.item}` : `Sandwich: ${JSON.stringify(item)}`}
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
       <Button variant="primary" onClick={handleCheckout}>Submit Order</Button>
     </Container>
   );
