@@ -1,6 +1,7 @@
 package com.pluralsight.data.mysql;
 
 import com.pluralsight.data.SidesDao;
+import com.pluralsight.models.toppings.Side;
 import org.springframework.stereotype.Component;
 
 import javax.print.attribute.standard.Sides;
@@ -20,9 +21,9 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
     }
 
     @Override
-    public List<Sides> getAllSides()
+    public List<Side> getAllSides()
     {
-      List<Sides> sides = new ArrayList<>();
+      List<Side> sides = new ArrayList<>();
 
       try(Connection connection = getConnection())
       {
@@ -40,7 +41,7 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
                 int sideId = row.getInt("side_id");
                 String sideType = row.getString("side_type");
 
-                sides.add(new Sides(sideId, sideType));
+                sides.add(new Side(sideId, sideType));
             }
       }catch (Exception e)
       {
@@ -49,7 +50,7 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
     }
 
     @Override
-    public Sides getById(int sideId)
+    public Side getById(int sideId)
     {
         try(Connection connection = getConnection())
         {
@@ -67,12 +68,12 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
     }
 
     @Override
-    public Sides create(Sides side) {
+    public Side create(Side side) {
         return null;
     }
 
     @Override
-    public void update(int sideId, Sides side) {
+    public void update(int sideId, Side side) {
 
     }
 

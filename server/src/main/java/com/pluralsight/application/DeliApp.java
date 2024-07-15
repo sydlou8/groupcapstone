@@ -238,8 +238,8 @@ public class DeliApp {
                     break;
                 case All :
                     sides.clear();
-                    sides.add(new Side("Au Jus"));
-                    sides.add(new Side("Sauces"));
+                    sides.add(new Side(sideId, "Au Jus"));
+                    sides.add(new Side(sideId, "Sauces"));
                     break;
                 default:
                     side = switch (choice) {
@@ -247,7 +247,7 @@ public class DeliApp {
                         case SideChoice.Sauces -> "Sauces";
                         default -> "";
                     };
-                    sides.add(new Side(side));
+                    sides.add(new Side(sideId, side));
                     addmore = ui.addMore();
             }
         } while (addmore);
