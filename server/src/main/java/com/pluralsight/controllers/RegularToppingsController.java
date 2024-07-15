@@ -1,6 +1,7 @@
 package com.pluralsight.controllers;
 
 import com.pluralsight.SandwichModels.RegularToppings;
+import com.pluralsight.data.RegularToppingsDao;
 import com.pluralsight.data.mysql.MyRegularToppingsDao;
 import com.pluralsight.models.toppings.RegularTopping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import java.util.List;
 @CrossOrigin
 public class RegularToppingsController {
 
-    private MyRegularToppingsDao regularToppingsDao = null;
+    private RegularToppingsDao regularToppingsDao = null;
 
     @Autowired
-    public RegularToppingsController(MyRegularToppingsDao regularToppingsDao)
+    public RegularToppingsController(RegularToppingsDao regularToppingsDao)
     {
         this.regularToppingsDao = regularToppingsDao;
     }
