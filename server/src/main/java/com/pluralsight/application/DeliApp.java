@@ -207,7 +207,7 @@ public class DeliApp {
                         case SauceChoice.Vinaigrette -> "Vinaigrette";
                         default -> "";
                     };
-                    sauces.add(new Sauces(sauce));
+                    sauces.add(new Sauces(sauceId, sauce));
                     addmore = ui.addMore();
             }
         } while (addmore);
@@ -215,12 +215,12 @@ public class DeliApp {
     }
     private HashSet<Sauces> handleAllSauces() {
         HashSet<Sauces> sauces = new HashSet<>();
-        sauces.add(new Sauces("Mayo"));
-        sauces.add(new Sauces("Mustard"));
-        sauces.add(new Sauces("Ketchup"));
-        sauces.add(new Sauces("Ranch"));
-        sauces.add(new Sauces("Thousand Islands"));
-        sauces.add(new Sauces("Vinaigrette"));
+        sauces.add(new Sauces(sauceId, "Mayo"));
+        sauces.add(new Sauces(sauceId, "Mustard"));
+        sauces.add(new Sauces(sauceId, "Ketchup"));
+        sauces.add(new Sauces(sauceId, "Ranch"));
+        sauces.add(new Sauces(sauceId, "Thousand Islands"));
+        sauces.add(new Sauces(sauceId, "Vinaigrette"));
         return sauces;
     }
 
