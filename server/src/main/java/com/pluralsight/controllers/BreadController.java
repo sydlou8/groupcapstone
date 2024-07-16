@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/breads")
+@CrossOrigin
 public class BreadController
 {
     private final BreadDao breadDao;
