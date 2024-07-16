@@ -142,6 +142,7 @@ CREATE TABLE sandwiches
     topping_id INT,
     sauce_id INT,
     side_id INT,
+    sandwich_price INT,
     PRIMARY KEY (sandwich_id),
     FOREIGN KEY (bread_id) REFERENCES breads(bread_id),
     FOREIGN KEY (meat_id) REFERENCES meats(meat_id),
