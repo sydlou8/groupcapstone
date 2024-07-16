@@ -9,7 +9,7 @@ const PastOrders = () => {
   useEffect(() => {
     const fetchPastOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/past-orders');
+        const response = await axios.get('http://localhost:8080/orders');
         setPastOrders(response.data);
         setLoading(false);
       } catch (error) {

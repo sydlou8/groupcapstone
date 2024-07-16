@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.Cheese;
 import com.pluralsight.data.CheeseDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Component
 public class MyCheeseDao extends MySqlDaoBase implements CheeseDao {
+    @Autowired
     public MyCheeseDao(DataSource dataSource) {
         super(dataSource);
     }

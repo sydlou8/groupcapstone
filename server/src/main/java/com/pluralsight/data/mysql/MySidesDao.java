@@ -1,10 +1,10 @@
 package com.pluralsight.data.mysql;
 
 import com.pluralsight.data.SidesDao;
-import com.pluralsight.models.toppings.Side;
+import com.pluralsight.SandwichModels.Sides;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.print.attribute.standard.Sides;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,15 +15,16 @@ import java.util.List;
 @Component
 public class MySidesDao extends MySqlDaoBase implements SidesDao
 {
+    @Autowired
     public MySidesDao(DataSource dataSource)
     {
         super(dataSource);
     }
 
     @Override
-    public List<Side> getAllSides()
+    public List<Sides> getAllSides()
     {
-      List<Side> sides = new ArrayList<>();
+      List<Sides> sides = new ArrayList<>();
 
       try(Connection connection = getConnection())
       {
@@ -41,7 +42,7 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
                 int sideId = row.getInt("side_id");
                 String sideType = row.getString("side_type");
 
-                sides.add(new Side(sideId, sideType));
+                sides.add(new Sides(sideId, sideType));
             }
       }catch (Exception e)
       {
@@ -50,7 +51,7 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
     }
 
     @Override
-    public Side getById(int sideId)
+    public Sides getById(int sideId)
     {
         try(Connection connection = getConnection())
         {
@@ -68,12 +69,12 @@ public class MySidesDao extends MySqlDaoBase implements SidesDao
     }
 
     @Override
-    public Side create(Side side) {
+    public Sides create(Sides side) {
         return null;
     }
 
     @Override
-    public void update(int sideId, Side side) {
+    public void update(int sideId, Sides side) {
 
     }
 

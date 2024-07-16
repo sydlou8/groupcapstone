@@ -15,7 +15,7 @@ public class BLT extends Sandwich {
         toppings.add(new PremiumTopping("Cheese", "Cheddar", false));
         toppings.add(new RegularTopping("Lettuce"));
         toppings.add(new RegularTopping("Tomato"));
-        toppings.add(new Sauces(sauceId, "Ranch"));
+        toppings.add(new Sauces(99, "Ranch"));
         return toppings;
     }
 }
