@@ -4,15 +4,15 @@ public class Bread
 {
     private int breadId;
     private String breadName;
-    private String breadSize;
+    private double breadPrice;
 
     public Bread() {
     }
 
-    public Bread(int breadId, String breadName, String breadSize) {
+    public Bread(int breadId, String breadName, double breadPrice) {
         this.breadId = breadId;
         this.breadName = breadName;
-        this.breadSize = breadSize;
+        this.breadPrice = breadPrice;
     }
 
     public int getBreadId() {
@@ -31,11 +31,11 @@ public class Bread
         this.breadName = breadName;
     }
 
-    public String getBreadSize() {
-        return breadSize;
+    public double getBreadPrice() {
+        return breadPrice;
     }
 
-    public void setBreadSize(String breadSize) {
-        this.breadSize = breadSize;
+    public void setBreadPrice(double breadPrice) {
+        this.breadPrice = breadPrice;
     }
 }

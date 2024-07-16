@@ -32,7 +32,7 @@ public class MyBreadDao extends MySqlDaoBase implements BreadDao
             String sql = """
                     SELECT bread_id
                     	,bread_type
-                        ,bread_size
+                    	,bread_price
                     FROM sandwich_shop.breads;
                     """;
 
@@ -42,9 +42,9 @@ public class MyBreadDao extends MySqlDaoBase implements BreadDao
             while (row.next()) {
                 int breadId = row.getInt("bread_id");
                 String breadName = row.getString("bread_type");
-                String breadDescription = row.getString("bread_size");
+                double breadPrice = row.getDouble("bread_price");
 
-                breads.add(new Bread(breadId, breadName, breadDescription));
+                breads.add(new Bread(breadId, breadName, breadPrice));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -60,7 +60,7 @@ public class MyBreadDao extends MySqlDaoBase implements BreadDao
             String sql = """
                     SELECT bread_id
                     	,bread_type
-                        ,bread_size
+                    	,bread_price
                     FROM breads
                     WHERE bread_id = ?;
                     """;
@@ -100,8 +100,8 @@ public class MyBreadDao extends MySqlDaoBase implements BreadDao
     {
         int breadId = row.getInt("bread_id");
         String breadName = row.getString("bread_type");
-        String breadDescription = row.getString("bread_size");
+        double breadPrice = row.getDouble("bread_price");
 
-        return new Bread(breadId, breadName, breadDescription);
+        return new Bread(breadId, breadName, breadPrice);
     }
 }
