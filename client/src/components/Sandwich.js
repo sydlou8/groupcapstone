@@ -9,6 +9,7 @@ const Sandwich = ({ addToCart }) => {
     const [toppings, setToppings] = useState([]);
     const [sides, setSides] = useState([]);
     const [selectedBread, setSelectedBread] = useState('');
+    const [selectedSize, setSelectedSize] = useState('medium');
     const [selectedMeat, setSelectedMeat] = useState('');
     const [extraMeat, setExtraMeat] = useState(false);
     const [selectedCheese, setSelectedCheese] = useState('');
@@ -37,6 +38,7 @@ const Sandwich = ({ addToCart }) => {
     const handleAddToCart = () => {
       const orderData = {
         bread: selectedBread,
+        size: selectedSize,
         meat: selectedMeat,
         extraMeat: extraMeat,
         cheese: selectedCheese,
@@ -60,6 +62,16 @@ const Sandwich = ({ addToCart }) => {
               ))}
             </Form.Select>
           </Form.Group>
+          <Form>
+            <Form.Group controlId="sizeSelect">
+              <Form.Label>Size</Form.Label>
+              <Form.Select value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
   
           <Form.Group controlId="meatSelect">
             <Form.Label>Meat</Form.Label>

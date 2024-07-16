@@ -3,6 +3,7 @@ package com.pluralsight.controllers;
 
 import com.pluralsight.SandwichModels.Cheese;
 import com.pluralsight.data.CheeseDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/cheeses")
+@CrossOrigin
 public class CheeseController
 {
     private final CheeseDao cheeseDao;
 
+    @Autowired
     public CheeseController(CheeseDao cheeseDao)
     {
         this.cheeseDao = cheeseDao;

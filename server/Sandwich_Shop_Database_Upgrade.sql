@@ -7,11 +7,11 @@ CREATE DATABASE sandwich_shop;
 USE sandwich_shop;
 
 -- Create tables
-CREATE TABLE breads
+CREATE TABLE breads 
 (
     bread_id INT NOT NULL AUTO_INCREMENT,
     bread_type VARCHAR(30) NOT NULL, 
-    bread_size VARCHAR(30),
+    bread_price DOUBLE,
     PRIMARY KEY (bread_id)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE meats
 (
     meat_id INT NOT NULL AUTO_INCREMENT,
     meat_type VARCHAR(30) NOT NULL,
-    extra_meat BOOLEAN NOT NULL DEFAULT FALSE,
+    extra_meat BOOLEAN DEFAULT NULL,
     PRIMARY KEY (meat_id)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE cheese
 (
     cheese_id INT NOT NULL AUTO_INCREMENT,
     cheese_type VARCHAR(30) NOT NULL,
-    extra_cheese BOOLEAN NOT NUll DEFAULT FALSE,
+    extra_cheese BOOLEAN DEFAULT NULL,
     PRIMARY KEY (cheese_id)
 );
 
@@ -66,52 +66,21 @@ CREATE TABLE chips
     PRIMARY KEY (chip_id)
 );
 
-CREATE TABLE sandwich
-(
-	sandwich_id INT NOT NULL AUTO_INCREMENT,
-    bread_id INT,
-    meat_id INT,
-    cheese_id INT,
-    topping_id INT,
-    sauce_id INT,
-    side_id INT,
-    PRIMARY KEY (sandwich_id),
-    FOREIGN KEY (bread_id) REFERENCES breads(bread_id),
-    FOREIGN KEY (meat_id) REFERENCES meats(meat_id),
-    FOREIGN KEY (cheese_id) REFERENCES cheese(cheese_id),
-    FOREIGN KEY (topping_id) REFERENCES regular_toppings(topping_id),
-    FOREIGN KEY (sauce_id) REFERENCES sauces(sauce_id),
-    FOREIGN KEY (side_id) REFERENCES sides(side_id)
-);
-
-CREATE TABLE sandwich_toppings
-(
-    sandwich_id INT NOT NULL,
-    topping_id INT NOT NULL,
-    PRIMARY KEY (sandwich_id, topping_id),
-    FOREIGN KEY (sandwich_id) REFERENCES sandwich(sandwich_id),
-    FOREIGN KEY (topping_id) REFERENCES regular_toppings(topping_id)
-);
-
-CREATE TABLE `order`
-(
-	order_id INT NOT NULL AUTO_INCREMENT,
-    sandwich_id INT,
-    drink_id INT,
-    chip_id INT,
-    PRIMARY KEY (order_id),
-    FOREIGN KEY (sandwich_id) REFERENCES sandwich(sandwich_id),
-    FOREIGN KEY (drink_id) REFERENCES drinks(drink_id),
-    FOREIGN KEY (chip_id) REFERENCES chips(chip_id)
-);
-
 -- Insert data into tables
-INSERT INTO breads (bread_type) 
+INSERT INTO breads (bread_type, bread_price) 
 VALUES 
-    ('white'), 
-    ('wheat'), 
-    ('rye'), 
-    ('wrap');
+    ('White 4"', 5.50), 
+    ('White 8"', 7.00), 
+    ('White 12"', 8.50), 
+    ('Wheat 4"', 5.50), 
+    ('Wheat 8"', 7.00), 
+    ('Wheat 12"', 8.50), 
+    ('Rye 4"', 5.50), 
+    ('Rye 8"', 7.00), 
+    ('Rye 12"', 8.50), 
+    ('Wrap 4"', 5.50), 
+    ('Wrap 8"', 7.00), 
+    ('Wrap 12"', 8.50);
 
 INSERT INTO meats (meat_type)
 VALUES 
@@ -149,7 +118,6 @@ VALUES
     ('ranch'), 
     ('thousand islands'), 
     ('vinaigrette');
-
 INSERT INTO sides (side_type) 
 VALUES 
     ('au jus'), 
@@ -164,3 +132,35 @@ INSERT INTO chips (chip_type)
 VALUES 
     ('Lays'), 
     ('Hot Fries');
+    
+CREATE TABLE sandwiches
+(
+    sandwich_id INT NOT NULL AUTO_INCREMENT,
+    bread_id INT NOT NULL,
+    meat_id INT NOT NULL,
+    cheese_id INT,
+    topping_id INT,
+    sauce_id INT,
+    side_id INT,
+    sandwich_price INT,
+    PRIMARY KEY (sandwich_id),
+    FOREIGN KEY (bread_id) REFERENCES breads(bread_id),
+    FOREIGN KEY (meat_id) REFERENCES meats(meat_id),
+    FOREIGN KEY (cheese_id) REFERENCES cheese(cheese_id),
+    FOREIGN KEY (topping_id) REFERENCES regular_toppings(topping_id),
+    FOREIGN KEY (sauce_id) REFERENCES sauces(sauce_id),
+    FOREIGN KEY (side_id) REFERENCES sides(side_id)
+);
+
+CREATE TABLE orders
+(
+    order_id INT NOT NULL AUTO_INCREMENT,
+    sandwich_id INT NOT NULL,
+    chip_id INT,
+    drink_id INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (sandwich_id) REFERENCES sandwiches(sandwich_id),
+    FOREIGN KEY (chip_id) REFERENCES chips(chip_id),
+    FOREIGN KEY (drink_id) REFERENCES drinks(drink_id)
+);

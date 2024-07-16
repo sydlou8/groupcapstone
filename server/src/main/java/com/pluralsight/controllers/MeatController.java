@@ -3,6 +3,7 @@ package com.pluralsight.controllers;
 
 import com.pluralsight.SandwichModels.Meat;
 import com.pluralsight.data.MeatDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/meats")
 public class MeatController
 {
     private final MeatDao meatDao;
 
+    @Autowired
     public MeatController(MeatDao meatDao)
     {
         this.meatDao = meatDao;

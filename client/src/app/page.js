@@ -1,12 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import OrderScreen from '@/components/OrderScreen';
-import Checkout from '@/components/Checkout';
-import PastOrders from "@/components/PastOrders";
+import OrderScreen from '../components/OrderScreen';
+import Checkout from '../components/Checkout';
+import PastOrders from "../components/PastOrders";
 
-const Home = () => {
+export default function Home() {
   return (
     <Router>
       <Switch>
@@ -24,4 +23,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+

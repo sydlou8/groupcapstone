@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.Meat;
 import com.pluralsight.data.MeatDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.util.List;
 @Component
 public class MyMeatDao extends MySqlDaoBase implements MeatDao
 {
+    @Autowired
     public MyMeatDao(DataSource dataSource)
     {
         super(dataSource);

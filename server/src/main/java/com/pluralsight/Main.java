@@ -9,8 +9,8 @@ public class Main
 {
     public static void main(String[] args)
     {
-        DeliApp app = new DeliApp();
-        app.run();
+        //DeliApp app = new DeliApp();
+        //app.run();
         SpringApplication.run(Main.class, args);
     }
 }
