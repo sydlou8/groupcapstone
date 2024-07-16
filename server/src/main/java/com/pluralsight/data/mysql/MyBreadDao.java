@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.Bread;
 import com.pluralsight.data.BreadDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.util.List;
 @Component
 public class MyBreadDao extends MySqlDaoBase implements BreadDao
 {
+    @Autowired
     public MyBreadDao(DataSource dataSource)
     {
         super(dataSource);

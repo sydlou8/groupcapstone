@@ -14,7 +14,7 @@ public class Philly extends Sandwich{
         toppings.add(new PremiumTopping("Meat", "Steak", false));
         toppings.add(new PremiumTopping("Cheese", "American", false));
         toppings.add(new RegularTopping("Peppers"));
-        toppings.add(new Sauces(sauceId, "Mayo"));
+        toppings.add(new Sauces(99, "Mayo"));
         return toppings;
     }
 }

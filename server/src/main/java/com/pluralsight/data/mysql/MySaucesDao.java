@@ -1,7 +1,8 @@
 package com.pluralsight.data.mysql;
 
 import com.pluralsight.data.SaucesDao;
-import com.pluralsight.models.toppings.Sauces;
+import com.pluralsight.SandwichModels.Sauces;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -14,6 +15,7 @@ import java.util.List;
 @Component
 public class MySaucesDao extends MySqlDaoBase implements SaucesDao
 {
+    @Autowired
     public MySaucesDao(DataSource dataSource)
     {
         super(dataSource);

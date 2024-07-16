@@ -1,6 +1,6 @@
 package com.pluralsight.data;
 
-import com.pluralsight.models.toppings.Sauces;
+import com.pluralsight.SandwichModels.Sauces;
 
 import java.util.List;
 
