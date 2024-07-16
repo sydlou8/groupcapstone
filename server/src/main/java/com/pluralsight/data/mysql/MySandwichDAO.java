@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
                         ,cheese_id
                         ,topping_id
                         ,sauce_id
-                        side_id
+                        ,side_id
+                        ,sandwich_price
                     FROM sandwiches;
                     """;
 
@@ -51,8 +53,9 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
                 int toppingId = row.getInt("topping_id");
                 int sauceId = row.getInt("sauce_id");
                 int sideId = row.getInt("side_id");
+                double price = row.getDouble("price");
 
-                sandwiches.add(new Sandwich(sandwichId, breadId, meatId, cheeseId, toppingId, sauceId, sideId));
+                sandwiches.add(new Sandwich(sandwichId, breadId, meatId, cheeseId, toppingId, sauceId, sideId, price ));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -73,9 +76,29 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
                         ,topping_id
                         ,sauce_id
                         ,side_id
+                        ,sandwich_price
                     FROM sandwiches
                     WHERE sandwich_id = ?;
                     """;
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, sandwichId);
+
+            ResultSet row = statement.executeQuery();
+
+            if(row.next())
+            {
+                int breadId = row.getInt("bread_id");
+                int meatId = row.getInt("meat_id");
+                int cheeseId = row.getInt("cheese_id");
+                int toppingId = row.getInt("topping_id");
+                int sauceId = row.getInt("sauce_id");
+                int sideId = row.getInt("side_id");
+                double price = row.getDouble("price");
+
+                return new Sandwich(sandwichId, breadId, meatId, cheeseId, toppingId, sauceId, sideId, price);
+            }
+
         }catch (Exception e)
         {
             System.out.println(e);
