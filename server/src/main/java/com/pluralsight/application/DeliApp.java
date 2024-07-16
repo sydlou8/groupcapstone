@@ -17,6 +17,7 @@ import java.util.HashSet;
 public class DeliApp {
     private Customer customer = new Customer();
     private UserInterface ui = new UserInterface();
+    private final int sauceId = 0;
 
     private void err() {
         System.out.println("Invalid input please enter correct response. ");
@@ -228,6 +229,7 @@ public class DeliApp {
         HashSet<Topping> sides = new HashSet<>();
         SideChoice choice;
         String side = "";
+        int sideId = 0;
         boolean addmore = false;
         // getSides
         do {
@@ -238,8 +240,8 @@ public class DeliApp {
                     break;
                 case All :
                     sides.clear();
-                    sides.add(new Side("Au Jus"));
-                    sides.add(new Side("Sauces"));
+                    sides.add(new Side(sideId, "Au Jus"));
+                    sides.add(new Side(++sideId, "Sauces"));
                     break;
                 default:
                     side = switch (choice) {
@@ -247,7 +249,7 @@ public class DeliApp {
                         case SideChoice.Sauces -> "Sauces";
                         default -> "";
                     };
-                    sides.add(new Side(side));
+                    sides.add(new Side(sideId, side));
                     addmore = ui.addMore();
             }
         } while (addmore);

@@ -1,6 +1,6 @@
 package com.pluralsight.data;
 
-import javax.print.attribute.standard.Sides;
+import com.pluralsight.SandwichModels.Sides;
 import java.util.List;
 
 public interface SidesDao

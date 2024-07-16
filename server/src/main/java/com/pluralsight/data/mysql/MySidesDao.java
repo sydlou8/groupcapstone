@@ -1,9 +1,10 @@
 package com.pluralsight.data.mysql;
 
 import com.pluralsight.data.SidesDao;
+import com.pluralsight.SandwichModels.Sides;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.print.attribute.standard.Sides;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.util.List;
 @Component
 public class MySidesDao extends MySqlDaoBase implements SidesDao
 {
+    @Autowired
     public MySidesDao(DataSource dataSource)
     {
         super(dataSource);

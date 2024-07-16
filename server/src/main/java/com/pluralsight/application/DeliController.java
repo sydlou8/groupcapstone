@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
 public class DeliController {
     private final DeliApp deliApp;
     private final DeliDao deliDao;

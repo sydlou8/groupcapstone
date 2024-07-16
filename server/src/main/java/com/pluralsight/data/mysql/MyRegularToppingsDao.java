@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.RegularToppings;
 import com.pluralsight.data.RegularToppingsDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.util.List;
 @Component
 public class MyRegularToppingsDao extends MySqlDaoBase implements RegularToppingsDao
 {
+    @Autowired
     public MyRegularToppingsDao(DataSource dataSource)
     {
         super(dataSource);

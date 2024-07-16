@@ -3,6 +3,7 @@ package com.pluralsight.data.mysql;
 import com.pluralsight.SandwichModels.Drinks;
 import com.pluralsight.data.DrinksDao;
 import com.pluralsight.models.addedExtras.Drink;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -16,6 +17,7 @@ import java.util.List;
 @Component
 public class MyDrinksDao extends MySqlDaoBase implements DrinksDao
 {
+    @Autowired
     public MyDrinksDao(DataSource dataSource)
     {
         super(dataSource);

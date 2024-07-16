@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.Chips;
 import com.pluralsight.data.ChipsDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.util.List;
 @Component
 public class MyChipsDao extends MySqlDaoBase implements ChipsDao
 {
+    @Autowired
     public MyChipsDao(DataSource dataSource)
     {
         super(dataSource);
