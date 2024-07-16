@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/sauces")
-@CrossOrigin
 public class SaucesController {
 
     private MySaucesDao saucesDao;

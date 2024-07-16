@@ -48,7 +48,7 @@ public class DrinksController
     {
         Drinks createdDrink = drinksDao.create(drinks);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdDrink)
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdDrink);
     }
 
     @PutMapping("/{drinkId}")
