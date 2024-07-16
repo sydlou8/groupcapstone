@@ -2,6 +2,7 @@ package com.pluralsight.data.mysql;
 
 import com.pluralsight.SandwichModels.Orders;
 import com.pluralsight.data.OrderDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -13,6 +14,7 @@ import java.util.List;
 @Component
 public class MyOrderDao extends MySqlDaoBase implements OrderDao
 {
+    @Autowired
     public MyOrderDao(DataSource dataSource){super(dataSource);}
 
     @Override
