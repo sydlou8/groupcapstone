@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import Sandwich from '@/components/Sandwich';
-import Drinks from '@/components/Drinks';
-import Chips from '@/components/Chips';
-import Cart from '@/components/Cart';
+import Sandwich from './Sandwich';
+import Drinks from './Drinks';
+import Chips from './Chips';
+import Cart from './Cart';
 
 const OrderScreen = () => {
   const [cartItems, setCartItems] = useState([]);
