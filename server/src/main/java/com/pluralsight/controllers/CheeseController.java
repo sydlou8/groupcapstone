@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/cheeses")
-@CrossOrigin
 public class CheeseController
 {
     private final CheeseDao cheeseDao;

@@ -9,11 +9,12 @@ public class Sandwich
     private int toppingId;
     private int sauceId;
     private int sideId;
+    private double price;
 
     public Sandwich() {
     }
 
-    public Sandwich(int sandwichId, int breadId, int meatId, int cheeseId, int toppingId, int sauceId, int sideId)
+    public Sandwich(int sandwichId, int breadId, int meatId, int cheeseId, int toppingId, int sauceId, int sideId, double price)
     {
         this.sandwichId = sandwichId;
         this.breadId = breadId;
@@ -22,6 +23,7 @@ public class Sandwich
         this.toppingId = toppingId;
         this.sauceId = sauceId;
         this.sideId = sideId;
+        this.price = price;
     }
 
     public int getSandwichId() {
@@ -78,5 +80,13 @@ public class Sandwich
 
     public void setSideId(int sideId) {
         this.sideId = sideId;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
