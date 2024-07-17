@@ -34,6 +34,7 @@ public class MyDrinksDao extends MySqlDaoBase implements DrinksDao
            String sql = """
                    SELECT drink_id
                    	,drink_type
+                   	,drink_price
                    FROM drinks;
                    """;
 
@@ -44,8 +45,9 @@ public class MyDrinksDao extends MySqlDaoBase implements DrinksDao
            {
                int drinkId = row.getInt("drink_id");
                String drinkName = row.getString("drink_type");
+               double drinkPrice = row.getDouble("drink_price");
 
-               drinks.add(new Drinks(drinkId, drinkName));
+               drinks.add(new Drinks(drinkId, drinkName, drinkPrice));
            }
        }catch (Exception e)
        {
@@ -62,6 +64,7 @@ public class MyDrinksDao extends MySqlDaoBase implements DrinksDao
           String sql = """
                   SELECT drink_id
                   	,drink_type
+                  	,drink_price
                   FROM drinks
                   WHERE drink_id = ?;
                   """;
@@ -75,8 +78,9 @@ public class MyDrinksDao extends MySqlDaoBase implements DrinksDao
             {
                 int drinkId1 = row.getInt("drink_id");
                 String drinkName = row.getString("drink_type");
+                double drinkPrice = row.getDouble("drink_price");
 
-                return new Drinks(drinkId1, drinkName);
+                return new Drinks(drinkId1, drinkName, drinkPrice);
             }
       }catch (Exception e)
       {

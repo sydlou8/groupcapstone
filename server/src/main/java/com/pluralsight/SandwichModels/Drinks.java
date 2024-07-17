@@ -4,14 +4,16 @@ public class Drinks
 {
     private int drinkId;
     private String drinkType;
+    private double drinkPrice;
 
     public Drinks() {
     }
 
-    public Drinks(int drinkId, String drinkType)
+    public Drinks(int drinkId, String drinkType, double drinkPrice)
     {
         this.drinkId = drinkId;
         this.drinkType = drinkType;
+        this.drinkPrice = drinkPrice;
     }
 
     public int getDrinkId() {
@@ -28,5 +30,13 @@ public class Drinks
 
     public void setDrinkType(String drinkType) {
         this.drinkType = drinkType;
+    }
+
+    public double getDrinkPrice() {
+        return drinkPrice;
+    }
+
+    public void setDrinkPrice(double drinkPrice) {
+        this.drinkPrice = drinkPrice;
     }
 }

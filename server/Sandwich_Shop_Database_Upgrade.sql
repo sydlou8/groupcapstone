@@ -56,6 +56,7 @@ CREATE TABLE drinks
 (
     drink_id INT NOT NULL AUTO_INCREMENT,
     drink_type VARCHAR(30),
+    drink_price DOUBLE,
     PRIMARY KEY (drink_id)
 );
 
@@ -63,6 +64,7 @@ CREATE TABLE chips
 (
     chip_id INT NOT NULL AUTO_INCREMENT,
     chip_type VARCHAR(30),
+    chip_price DOUBLE,
     PRIMARY KEY (chip_id)
 );
 
@@ -123,15 +125,25 @@ VALUES
     ('au jus'), 
     ('sauce');
 
-INSERT INTO drinks (drink_type)
+INSERT INTO drinks (drink_type, drink_price)
 VALUES 
-    ('Coke'), 
-    ('Sprite');
+    ('Coke - sm', 2.00), 
+    ('Coke - md', 2.50), 
+    ('Coke - lg', 3.00), 
+    ('Sprite - sm', 2.00), 
+    ('Sprite - md', 2.50), 
+    ('Sprite - lg', 3.00),
+    ('Fanta - sm', 2.00), 
+    ('Fanta - md', 2.50), 
+    ('Fanta - lg', 3.00),
+    ('Diet Coke - sm', 2.00), 
+    ('Diet Coke - md', 2.50), 
+    ('Diet Coke - lg', 3.00);
 
-INSERT INTO chips (chip_type)
+INSERT INTO chips (chip_type, chip_price)
 VALUES 
-    ('Lays'), 
-    ('Hot Fries');
+    ('Lays', 1.50), 
+    ('Hot Fries', 1.50);
     
 CREATE TABLE sandwiches
 (

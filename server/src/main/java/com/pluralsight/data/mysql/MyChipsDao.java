@@ -32,6 +32,7 @@ public class MyChipsDao extends MySqlDaoBase implements ChipsDao
             String sql = """
                     SELECT chip_id
                     	,chip_type
+                    	,chip_price
                     FROM chips;
                     """;
 
@@ -42,8 +43,9 @@ public class MyChipsDao extends MySqlDaoBase implements ChipsDao
             {
                 int chipsId = row.getInt("chip_id");
                 String chipsName = row.getString("chip_type");
+                double chipsPrice = row.getDouble("chip_price");
 
-                chips.add(new Chips(chipsId, chipsName));
+                chips.add(new Chips(chipsId, chipsName, chipsPrice));
             }
         }catch (Exception e)
         {
@@ -60,6 +62,7 @@ public class MyChipsDao extends MySqlDaoBase implements ChipsDao
             String sql = """
                     SELECT chip_id
                     	,chip_type
+                    	,chip_price
                     FROM chips
                     WHERE chip_id = ?;
                     """;
@@ -71,7 +74,11 @@ public class MyChipsDao extends MySqlDaoBase implements ChipsDao
 
             if (row.next())
             {
-                return new Chips(row.getInt("chips_id"), row.getString("chip_type"));
+                return new Chips(
+                        row.getInt("chips_id"),
+                        row.getString("chip_type"),
+                        row.getDouble("chip_price")
+                );
             }
         }catch (Exception e)
         {

@@ -4,14 +4,16 @@ public class Chips
 {
     private int chipsId;
     private String chipType;
+    private double chipsPrice;
 
     public Chips() {
     }
 
-    public Chips(int chipsId, String chipType)
+    public Chips(int chipsId, String chipType, double chipsPrice)
     {
         this.chipsId = chipsId;
         this.chipType = chipType;
+        this.chipsPrice = chipsPrice;
     }
 
     public int getChipsId() {
@@ -28,6 +30,14 @@ public class Chips
 
     public void setChipType(String chipType) {
         this.chipType = chipType;
+    }
+
+    public double getChipsPrice() {
+        return chipsPrice;
+    }
+
+    public void setChipsPrice(double chipsPrice) {
+        this.chipsPrice = chipsPrice;
     }
 }
 
