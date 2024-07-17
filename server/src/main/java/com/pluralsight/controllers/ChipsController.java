@@ -30,7 +30,7 @@ public class ChipsController
         return ResponseEntity.ok(chips);
     }
 
-    @GetMapping("/{chipsId")
+    @GetMapping("/{chipsId}")
     public ResponseEntity<Chips> getChipsById(@PathVariable int chipsId)
     {
         Chips chips = chipsDao.getById(chipsId);
