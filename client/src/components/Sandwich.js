@@ -9,16 +9,16 @@ const Sandwich = ({ addToCart }) => {
   const [toppings, setToppings] = useState([]);
   const [sauces, setSauces] = useState([]);
   const [sides, setSides] = useState([]);
-  
+
   const [selectedBread, setSelectedBread] = useState(null);
   const [selectedBreadSize, setSelectedBreadSize] = useState('4"');
   const [selectedMeat, setSelectedMeat] = useState(null);
   const [selectedCheese, setSelectedCheese] = useState(null);
   const [extraMeat, setExtraMeat] = useState(false);
   const [extraCheese, setExtraCheese] = useState(false);
-  const [selectedToppings, setSelectedToppings] = useState([]);
-  const [selectedSauces, setSelectedSauces] = useState([]);
-  const [selectedSides, setSelectedSides] = useState([]);
+  const [selectedTopping, setSelectedTopping] = useState(null);
+  const [selectedSauce, setSelectedSauce] = useState(null);
+  const [selectedSide, setSelectedSide] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -51,10 +51,6 @@ const Sandwich = ({ addToCart }) => {
     setSelectedBread(selectedBread);
   };
 
-  const handleBreadSizeChange = (e) => {
-    setSelectedBreadSize(e.target.value);
-  };
-
   const handleMeatChange = (e) => {
     const meatId = parseInt(e.target.value);
     const selectedMeat = meatOptions.find(meat => meat.meatId === meatId);
@@ -68,30 +64,21 @@ const Sandwich = ({ addToCart }) => {
   };
 
   const handleToppingChange = (e) => {
-    const topping = e.target.value;
-    if (selectedToppings.includes(topping)) {
-      setSelectedToppings(selectedToppings.filter(t => t !== topping));
-    } else {
-      setSelectedToppings([...selectedToppings, topping]);
-    }
+    const toppingId = parseInt(e.target.value);
+    const selectedTopping = toppings.find(topping => topping.regularToppingsId === toppingId);
+    setSelectedTopping(selectedTopping);
   };
 
   const handleSauceChange = (e) => {
-    const sauce = e.target.value;
-    if (selectedSauces.includes(sauce)) {
-      setSelectedSauces(selectedSauces.filter(s => s !== sauce));
-    } else {
-      setSelectedSauces([...selectedSauces, sauce]);
-    }
+    const sauceId = parseInt(e.target.value);
+    const selectedSauce = sauces.find(sauce => sauce.sauceId === sauceId);
+    setSelectedSauce(selectedSauce);
   };
 
   const handleSideChange = (e) => {
-    const side = e.target.value;
-    if (selectedSides.includes(side)) {
-      setSelectedSides(selectedSides.filter(s => s !== side));
-    } else {
-      setSelectedSides([...selectedSides, side]);
-    }
+    const sideId = parseInt(e.target.value);
+    const selectedSide = sides.find(side => side.sideId === sideId);
+    setSelectedSide(selectedSide);
   };
 
   const calculateTotalPrice = () => {
@@ -114,7 +101,7 @@ const Sandwich = ({ addToCart }) => {
       }
     }
 
-    // No charge for toppings, sauces, or sides
+    // No charge for topping, sauce, or side
     setTotalPrice(price);
   };
 
@@ -122,22 +109,29 @@ const Sandwich = ({ addToCart }) => {
     calculateTotalPrice();
   }, [selectedBread, selectedMeat, selectedCheese, extraMeat, extraCheese]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const orderItem = {
-      type: 'Sandwich',
-      bread: selectedBread ? selectedBread.breadName : 'None',
-      breadSize: selectedBreadSize,
-      meat: selectedMeat ? selectedMeat.meatType : 'None',
-      extraMeat,
-      cheese: selectedCheese ? selectedCheese.cheeseType : 'None',
-      extraCheese,
-      toppings: selectedToppings,
-      sauces: selectedSauces,
-      sides: selectedSides,
+    const sandwichOrder = {
+      type:'Sandwich',
+      bread_id: selectedBread ? selectedBread.breadId : null,
+      meat_id: selectedMeat ? selectedMeat.meatId : null,
+      cheese_id: selectedCheese ? selectedCheese.cheeseId : null,
+      topping_id: selectedTopping ? selectedTopping.regularToppingsId : null,
+      sauce_id: selectedSauce ? selectedSauce.sauceId : null,
+      side_id: selectedSide ? selectedSide.sideId : null,
       price: totalPrice,
-    };
-    addToCart(orderItem); // Ensure addToCart is correctly passed and used
+      sandwich_price: totalPrice,
+    }
+
+    console.log(JSON.stringify(sandwichOrder, null, 2));
+    try {
+      const response = await axios.post('http://localhost:8080/sandwiches', sandwichOrder);
+      console.log('Sandwich added:', response.data);
+      sandwichOrder.id = response.data.sandwichId;
+      addToCart(sandwichOrder);
+    } catch (error) {
+      console.error('Error adding sandwich:', error);
+    }
   };
 
   return (
@@ -195,49 +189,40 @@ const Sandwich = ({ addToCart }) => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formToppings">
-          <Form.Label>Toppings</Form.Label>
-          <div/>
-          {toppings.map((topping) => (
-            <Form.Check
-              key={topping.regularToppingsId}
-              inline
-              type="checkbox"
-              label={topping.regularToppingsType}
-              value={topping.regularToppingsType}
-              onChange={handleToppingChange}
-            />
-          ))}
+        <Form.Group controlId="formTopping">
+          <Form.Label>Topping</Form.Label>
+          <Form.Select onChange={handleToppingChange}>
+            <option>Select topping</option>
+            {toppings.map((topping) => (
+              <option key={topping.regularToppingsId} value={topping.regularToppingsId}>
+                {topping.regularToppingsType}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="formSauces">
-          <Form.Label>Sauces</Form.Label>
-          <div/>
-          {sauces.map((sauce) => (
-            <Form.Check
-              key={sauce.sauceId}
-              inline
-              type="checkbox"
-              label={sauce.sauceType}
-              value={sauce.sauceType}
-              onChange={handleSauceChange}
-            />
-          ))}
+        <Form.Group controlId="formSauce">
+          <Form.Label>Sauce</Form.Label>
+          <Form.Select onChange={handleSauceChange}>
+            <option>Select sauce</option>
+            {sauces.map((sauce) => (
+              <option key={sauce.sauceId} value={sauce.sauceId}>
+                {sauce.sauceType}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="formSides">
-          <Form.Label>Sides</Form.Label>
-          <div/>
-          {sides.map((side) => (
-            <Form.Check
-              key={side.sideId}
-              inline
-              type="checkbox"
-              label={side.sideType}
-              value={side.sideType}
-              onChange={handleSideChange}
-            />
-          ))}
+        <Form.Group controlId="formSide">
+          <Form.Label>Side</Form.Label>
+          <Form.Select onChange={handleSideChange}>
+            <option>Select side</option>
+            {sides.map((side) => (
+              <option key={side.sideId} value={side.sideId}>
+                {side.sideType}
+              </option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
         <h5>Sandwich Price: ${totalPrice.toFixed(2)}</h5>

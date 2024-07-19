@@ -63,20 +63,6 @@ const Checkout = () => {
     console.log('Order payload:', order); // Log order payload
   
     try {
-      // Make POST requests for each sandwich
-      for (const sandwich of sandwiches) {
-        await axios.post('http://localhost:8080/sandwiches', {
-          sandwichId: sandwich.sandwichId,
-          breadId: sandwich.breadId,
-          meatId: sandwich.meatId,
-          cheeseId: sandwich.cheeseId,
-          toppingId: sandwich.toppingId,
-          sauceId: sandwich.sauceId,
-          sideId: sandwich.sideId,
-          price: sandwich.price
-        });
-      }
-  
       // Make POST request for the order
       await axios.post('http://localhost:8080/orders', order);
   

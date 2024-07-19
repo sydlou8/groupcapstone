@@ -53,7 +53,7 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
                 int toppingId = row.getInt("topping_id");
                 int sauceId = row.getInt("sauce_id");
                 int sideId = row.getInt("side_id");
-                double price = row.getDouble("price");
+                double price = row.getDouble("sandwich_price");
 
                 sandwiches.add(new Sandwich(sandwichId, breadId, meatId, cheeseId, toppingId, sauceId, sideId, price ));
             }
@@ -94,7 +94,7 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
                 int toppingId = row.getInt("topping_id");
                 int sauceId = row.getInt("sauce_id");
                 int sideId = row.getInt("side_id");
-                double price = row.getDouble("price");
+                double price = row.getDouble("sandwich_price");
 
                 return new Sandwich(sandwichId, breadId, meatId, cheeseId, toppingId, sauceId, sideId, price);
             }
@@ -108,8 +108,44 @@ public class MySandwichDAO extends MySqlDaoBase implements SandwichDao
 
     @Override
     public Sandwich create(Sandwich sandwich) {
+        try (Connection connection = getConnection()) {
+            String sql = """
+                INSERT INTO sandwiches (bread_id, meat_id, cheese_id, topping_id, sauce_id, side_id, sandwich_price)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
+                """;
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, sandwich.getBreadId());
+            statement.setInt(2, sandwich.getMeatId());
+            statement.setInt(3, sandwich.getCheeseId());
+            statement.setInt(4, sandwich.getToppingId());
+            statement.setInt(5, sandwich.getSauceId());
+            statement.setInt(6, sandwich.getSideId());
+            statement.setDouble(7, sandwich.getPrice());
+
+            System.out.println("Inserting sandwich with bread_id: " + sandwich.getBreadId() +
+                    ", meat_id: " + sandwich.getMeatId() +
+                    ", cheese_id: " + sandwich.getCheeseId() +
+                    ", topping_id: " + sandwich.getToppingId() +
+                    ", sauce_id: " + sandwich.getSauceId() +
+                    ", side_id: " + sandwich.getSideId());
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int sandwichId = generatedKeys.getInt(1);
+                    sandwich.setSandwichId(sandwichId);
+                    return sandwich;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return null;
     }
+
 
     @Override
     public void update(int sandwichId, Sandwich sandwich) {

@@ -44,4 +44,9 @@ public class SandwichController
         }
     }
 
+    @PostMapping
+    public Sandwich createSandwich(@RequestBody Sandwich sandwich)
+    {
+        return sandwichDao.create(sandwich);
+    }
 }

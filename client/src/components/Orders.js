@@ -9,6 +9,7 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get('http://localhost:8080/orders');
+        console.log(response.data);
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -18,6 +19,8 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
+  console.log(orders);
+  
   return (
     <Container>
       <Row>
@@ -36,12 +39,12 @@ const Orders = () => {
           <Row key={index}>
             <Col>
               <h3>Order #{index + 1}</h3>
-              <p>Total Price: {order.totalPrice !== undefined ? order.totalPrice : 'N/A'}</p>
+              <p>Total Price: {order.orderPrice !== undefined ? '$ ' + order.orderPrice.toFixed(2) : 'N/A'}</p>
               <h4>Sandwiches</h4>
               {order.sandwiches && order.sandwiches.length > 0 ? (
                 order.sandwiches.map((sandwich, i) => (
                   <p key={i}>
-                    Sandwich ID: {sandwich.sandwichId}, Price: {sandwich.price}
+                    Custome Sandwich, Price: $  {sandwich.price.toFixed(2)}
                   </p>
                 ))
               ) : (
@@ -51,7 +54,7 @@ const Orders = () => {
               {order.drinks && order.drinks.length > 0 ? (
                 order.drinks.map((drink, i) => (
                   <p key={i}>
-                    Drink Type: {drink.drinkType}, Price: {drink.drinkPrice}
+                    Drink Type: {drink.drinkType}, Price: $  {drink.drinkPrice.toFixed(2)}
                   </p>
                 ))
               ) : (
@@ -61,7 +64,7 @@ const Orders = () => {
               {order.chips && order.chips.length > 0 ? (
                 order.chips.map((chip, i) => (
                   <p key={i}>
-                    Chip Type: {chip.chipType}, Price: {chip.chipsPrice}
+                    Chip Type: {chip.chipType}, Price: $  {chip.chipsPrice.toFixed(2)}
                   </p>
                 ))
               ) : (
