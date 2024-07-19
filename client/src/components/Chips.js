@@ -32,6 +32,7 @@ const Chips = ({ addToCart }) => {
     if (selectedChips) {
       const orderItem = {
         type: 'Chips',
+        chipsId: selectedChips.chipsId,
         chipType: selectedChips.chipType,
         price: totalPrice,
       };

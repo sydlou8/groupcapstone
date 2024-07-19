@@ -32,6 +32,7 @@ const Drinks = ({ addToCart }) => {
     if (selectedDrink) {
       const orderItem = {
         type: 'Drink',
+        drinkId: selectedDrink.drinkId,
         drinkType: selectedDrink.drinkType,
         price: totalPrice,
       };
