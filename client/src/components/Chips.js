@@ -1,26 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Form } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 
-const Chips = ({ setSelectedChips }) => {
-  const [chips, setChips] = useState([]);
+const Chips = ({ addToCart }) => {
+  const [chipsOptions, setChipsOptions] = useState([]);
+  const [selectedChips, setSelectedChips] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/chips').then(response => {
-      setChips(response.data);
-    });
+    const fetchChips = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/chips');
+        setChipsOptions(response.data);
+      } catch (error) {
+        console.error('Error fetching chips:', error);
+      }
+    };
+
+    fetchChips();
   }, []);
 
+  const handleChipsChange = (e) => {
+    const chipsId = parseInt(e.target.value);
+    const selectedChips = chipsOptions.find(chips => chips.chipsId === chipsId);
+    setSelectedChips(selectedChips);
+    setTotalPrice(selectedChips ? selectedChips.chipsPrice : 0);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (selectedChips) {
+      const orderItem = {
+        type: 'Chips',
+        chipType: selectedChips.chipType,
+        price: totalPrice,
+      };
+      addToCart(orderItem);
+    }
+  };
+
   return (
-    <Form.Group controlId="chipsSelect">
-      <Form.Label>Chips</Form.Label>
-      <Form.Select onChange={(e) => setSelectedChips(e.target.value)}>
-        <option value="">Select Chips</option>
-        {chips.map((chip, index) => (
-          <option key={index} value={chip}>{chip}</option>
-        ))}
-      </Form.Select>
-    </Form.Group>
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formChips">
+          <Form.Label>Chips</Form.Label>
+          <Form.Select onChange={handleChipsChange}>
+            <option>Select chips</option>
+            {chipsOptions.map((chips) => (
+              <option key={chips.chipsId} value={chips.chipsId}>
+                {chips.chipType} - ${chips.chipsPrice.toFixed(2)}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+
+        <h5>Chips Price: ${totalPrice.toFixed(2)}</h5>
+
+        <Button variant="primary" type="submit">
+          Add Chips to Cart
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

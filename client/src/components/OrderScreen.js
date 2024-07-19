@@ -1,62 +1,43 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button, Navbar, Nav } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import Sandwich from './Sandwich';
-import Drinks from './Drinks';
-import Chips from './Chips';
-import Cart from './Cart';
+import React, { useState, useEffect, useContext } from 'react';
+import { Container, Row, Col, Button, Navbar, Nav, ListGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext'; // Ensure CartContext is used if you have one
+import Sandwich from '../components/Sandwich'; // Adjust paths as necessary
+import Drinks from '../components/Drinks';
+import Chips from '../components/Chips';
+import ShoppingCart from '../components/ShoppingCart';
 
 const OrderScreen = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [selectedDrink, setSelectedDrink] = useState('');
-  const [selectedChips, setSelectedChips] = useState('');
-  const history = useHistory();
+  const { cartItems, addToCart } = useCart();  // Use CartContext if applicable
+  const navigate = useNavigate();
 
-  const addToCart = (item) => {
-    setCartItems([...cartItems, item]);
-  };
-
-  const handleDrinkChange = (drink) => {
-    setSelectedDrink(drink);
-    addToCart({ type: 'Drink', item: drink });
-  };
-
-  const handleChipsChange = (chips) => {
-    setSelectedChips(chips);
-    addToCart({ type: 'Chips', item: chips });
-  };
-
-  const handleRemoveItem = (index) => {
-    const newCartItems = cartItems.filter((_, i) => i !== index);
-    setCartItems(newCartItems);
+  // Function to handle adding items to cart
+  const handleAddToCart = (item) => {
+    addToCart(item);
   };
 
   const handleProceedToCheckout = () => {
-    history.push('/checkout', { cartItems });
-  };
-
-  const navigateToPastOrders = () => {
-    history.push('/past-orders');
+    navigate('/checkout');
   };
 
   return (
     <Container>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#">Sandwich Shop</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link onClick={navigateToPastOrders}>Past Orders</Nav.Link>
-        </Nav>
-      </Navbar>
       <Row>
         <Col md={8}>
-          <h1>Create Your Order</h1>
-          <Sandwich addToCart={addToCart} />
-          <Drinks setSelectedDrink={handleDrinkChange} />
-          <Chips setSelectedChips={handleChipsChange} />
+          <Row>
+            <h1>Create Your Order</h1>
+            <Col md={8}>
+              <Sandwich addToCart={handleAddToCart} />
+            </Col>
+            <Col md={4}>
+              <Drinks addToCart={handleAddToCart} />
+              <Chips addToCart={handleAddToCart} />
+            </Col>
+          </Row>
         </Col>
         <Col md={4}>
           <h1>Shopping Cart</h1>
-          <Cart cartItems={cartItems} handleRemoveItem={handleRemoveItem} />
+          <ShoppingCart cartItems={cartItems} />
           <Button variant="primary" onClick={handleProceedToCheckout}>
             Proceed to Checkout
           </Button>

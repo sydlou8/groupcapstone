@@ -154,7 +154,7 @@ CREATE TABLE sandwiches
     topping_id INT,
     sauce_id INT,
     side_id INT,
-    sandwich_price INT,
+    sandwich_price DOUBLE,
     PRIMARY KEY (sandwich_id),
     FOREIGN KEY (bread_id) REFERENCES breads(bread_id),
     FOREIGN KEY (meat_id) REFERENCES meats(meat_id),
@@ -167,12 +167,34 @@ CREATE TABLE sandwiches
 CREATE TABLE orders
 (
     order_id INT NOT NULL AUTO_INCREMENT,
-    sandwich_id INT NOT NULL,
-    chip_id INT,
-    drink_id INT,
+    order_price DOUBLE NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (order_id),
-    FOREIGN KEY (sandwich_id) REFERENCES sandwiches(sandwich_id),
-    FOREIGN KEY (chip_id) REFERENCES chips(chip_id),
+    PRIMARY KEY (order_id)
+);
+
+CREATE TABLE sandwich_order
+(
+    order_id INT NOT NULL,
+    sandwich_id INT NOT NULL,
+    PRIMARY KEY (order_id, sandwich_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (sandwich_id) REFERENCES sandwiches(sandwich_id)
+);
+
+CREATE TABLE drink_order
+(
+    order_id INT NOT NULL,
+    drink_id INT NOT NULL,
+    PRIMARY KEY (order_id, drink_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
     FOREIGN KEY (drink_id) REFERENCES drinks(drink_id)
+);
+
+CREATE TABLE chips_order
+(
+    order_id INT NOT NULL,
+    chip_id INT NOT NULL,
+    PRIMARY KEY (order_id, chip_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (chip_id) REFERENCES chips(chip_id)
 );

@@ -1,26 +1,29 @@
 "use client";
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import OrderScreen from '../components/OrderScreen';
+
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { CartProvider } from '../context/CartContext';
 import Checkout from '../components/Checkout';
-import PastOrders from "../components/PastOrders";
+import Orders from '../components/Orders';
+import OrderScreen from '../components/OrderScreen';
+import Header from '../components/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'react-bootstrap';
 
 export default function Home() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/checkout">
-          <Checkout />
-        </Route>
-        <Route path="/past-orders">
-          <PastOrders />
-        </Route>
-        <Route path="/">
-          <OrderScreen />
-        </Route>
-      </Switch>
-    </Router>
-  );
-};
-
-
+    return (
+        <CartProvider>
+            <Router>
+              <div>
+                <Header />
+                <Container className="mt-4">
+                    <Routes>
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/" element={<OrderScreen />} />
+                    </Routes>
+                </Container>
+              </div>
+            </Router>
+        </CartProvider>
+    );
+}

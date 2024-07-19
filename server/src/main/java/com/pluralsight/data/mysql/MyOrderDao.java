@@ -1,153 +1,161 @@
 package com.pluralsight.data.mysql;
 
-import com.pluralsight.SandwichModels.Orders;
+import com.pluralsight.SandwichModels.Order;
+import com.pluralsight.SandwichModels.Sandwich;
+import com.pluralsight.SandwichModels.Chips;
+import com.pluralsight.SandwichModels.Drinks;
 import com.pluralsight.data.OrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Component
-public class MyOrderDao extends MySqlDaoBase implements OrderDao
-{
+public class MyOrderDao extends MySqlDaoBase implements OrderDao {
+
     @Autowired
-    public MyOrderDao(DataSource dataSource){super(dataSource);}
+    public MyOrderDao(DataSource dataSource) {
+        super(dataSource);
+    }
 
     @Override
-    public List<Orders> getAllOrders() {
-
-        List<Orders> orders = new ArrayList<>();
-
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
         try (Connection connection = getConnection()) {
-            String sql = """
-                    SELECT order_id, sandwich_id, drink_id, order_date, size, price
-                    FROM orders
-                    """;
+            String orderSql = "SELECT * FROM orders";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(orderSql);
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setOrderPrice(rs.getDouble("order_price"));
 
-            while (resultSet.next()) {
-                int orderId = resultSet.getInt("order_id");
-                int sandwichId = resultSet.getInt("sandwich_id");
-                int drinkId = resultSet.getInt("drink_id");
-                LocalDate orderDate = resultSet.getDate("order_date").toLocalDate();
-                int size = resultSet.getInt("size");
-                double price = resultSet.getDouble("price");
+                // Populate sandwiches
+                String sandwichSql = "SELECT s.* FROM sandwich_order so JOIN sandwiches s ON so.sandwich_id = s.sandwich_id WHERE so.order_id = ?";
+                PreparedStatement sandwichStmt = connection.prepareStatement(sandwichSql);
+                sandwichStmt.setInt(1, order.getOrderId());
+                ResultSet sandwichRs = sandwichStmt.executeQuery();
+                List<Sandwich> sandwiches = new ArrayList<>();
+                while (sandwichRs.next()) {
+                    Sandwich sandwich = new Sandwich();
+                    sandwich.setSandwichId(sandwichRs.getInt("sandwich_id"));
+                    sandwich.setBreadId(sandwichRs.getInt("bread_id"));
+                    sandwich.setMeatId(sandwichRs.getInt("meat_id"));
+                    sandwich.setCheeseId(sandwichRs.getInt("cheese_id"));
+                    sandwich.setToppingId(sandwichRs.getInt("topping_id"));
+                    sandwich.setSauceId(sandwichRs.getInt("sauce_id"));
+                    sandwich.setSideId(sandwichRs.getInt("side_id"));
+                    sandwich.setPrice(sandwichRs.getDouble("sandwich_price"));
+                    // Set other fields as necessary
+                    sandwiches.add(sandwich);
+                }
+                order.setSandwiches(sandwiches);
 
-                Orders order = new Orders(orderId, sandwichId, drinkId, orderDate, size, price);
+                // Populate chips
+                String chipsSql = "SELECT c.* FROM chips_order co JOIN chips c ON co.chip_id = c.chip_id WHERE co.order_id = ?";
+                PreparedStatement chipsStmt = connection.prepareStatement(chipsSql);
+                chipsStmt.setInt(1, order.getOrderId());
+                ResultSet chipsRs = chipsStmt.executeQuery();
+                List<Chips> chipsList = new ArrayList<>();
+                while (chipsRs.next()) {
+                    Chips chips = new Chips();
+                    chips.setChipsId(chipsRs.getInt("chip_id"));
+                    chips.setChipType(chipsRs.getString("chip_type")); // Update to chipsType
+                    chips.setChipsPrice(chipsRs.getDouble("chip_price"));
+                    // Set other fields as necessary
+                    chipsList.add(chips);
+                }
+                order.setChips(chipsList);
+
+                // Populate drinks
+                String drinksSql = "SELECT d.* FROM drink_order do JOIN drinks d ON do.drink_id = d.drink_id WHERE do.order_id = ?";
+                PreparedStatement drinksStmt = connection.prepareStatement(drinksSql);
+                drinksStmt.setInt(1, order.getOrderId());
+                ResultSet drinksRs = drinksStmt.executeQuery();
+                List<Drinks> drinksList = new ArrayList<>();
+                while (drinksRs.next()) {
+                    Drinks drink = new Drinks();
+                    drink.setDrinkId(drinksRs.getInt("drink_id"));
+                    drink.setDrinkType(drinksRs.getString("drink_type")); // Update to drinkType
+                    drink.setDrinkPrice(drinksRs.getDouble("drink_price"));
+                    // Set other fields as necessary
+                    drinksList.add(drink);
+                }
+                order.setDrinks(drinksList);
+
                 orders.add(order);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace(); // Use e.printStackTrace() for detailed error logs
         }
         return orders;
     }
 
-    @Override
-    public Orders getById(int orderId)
-    {
-        Orders order = null;
-
-        try (Connection connection = getConnection()) {
-            String sql = """
-                    SELECT order_id,
-                    sandwich_id,
-                    drink_id,
-                    order_date,
-                    size,
-                    price
-                    FROM orders
-                    WHERE order_id = ?
-                    """;
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, orderId);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                int sandwichId = resultSet.getInt("sandwich_id");
-                int drinkId = resultSet.getInt("drink_id");
-                LocalDate orderDate = resultSet.getDate("order_date").toLocalDate();
-                int size = resultSet.getInt("size");
-                double price = resultSet.getDouble("price");
-
-                order = new Orders(orderId, sandwichId, drinkId, orderDate, size, price);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return order;
-    }
 
     @Override
-    public Orders create(Orders order)
-    {
+    public Order create(Order order) {
+        double totalOrderPrice = order.getSandwiches().stream().mapToDouble(Sandwich::getPrice).sum()
+            + order.getChips().stream().mapToDouble(Chips::getChipsPrice).sum()
+            + order.getDrinks().stream().mapToDouble(Drinks::getDrinkPrice).sum();
         try (Connection connection = getConnection()) {
-            String sql = """
-                    INSERT INTO orders (sandwich_id, drink_id, order_date, size, price)
-                    VALUES (?, ?, ?, ?, ?)
-                    """;
+            String orderSql = "INSERT INTO orders (order_price) VALUES (?)";
+            PreparedStatement orderStmt = connection.prepareStatement(orderSql, Statement.RETURN_GENERATED_KEYS);
+            orderStmt.setDouble(1, totalOrderPrice);
+            orderStmt.executeUpdate();
 
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, order.getSandwichId());
-            statement.setInt(2, order.getDrinkId());
-            statement.setDate(3, Date.valueOf(order.getOrderDate()));
-            statement.setInt(4, order.getSize());
-            statement.setDouble(5, order.getPrice());
-
-            statement.executeUpdate();
-
-            ResultSet generatedKeys = statement.getGeneratedKeys();
+            ResultSet generatedKeys = orderStmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int orderId = generatedKeys.getInt(1);
+
+                for (Sandwich sandwich : order.getSandwiches()) {
+                    // Verify sandwich_id exists in sandwiches table
+                    String verifySandwichSql = "SELECT 1 FROM sandwiches WHERE sandwich_id = ?";
+                    PreparedStatement verifySandwichStmt = connection.prepareStatement(verifySandwichSql);
+                    verifySandwichStmt.setInt(1, sandwich.getSandwichId());
+                    ResultSet rs = verifySandwichStmt.executeQuery();
+                    if (rs.next()) {
+                        String sandwichSql = "INSERT INTO sandwich_order (order_id, sandwich_id) VALUES (?, ?)";
+                        PreparedStatement sandwichStmt = connection.prepareStatement(sandwichSql);
+                        sandwichStmt.setInt(1, orderId);
+                        sandwichStmt.setInt(2, sandwich.getSandwichId());
+                        sandwichStmt.executeUpdate();
+                    } else {
+                        System.out.println("Invalid sandwich_id: " + sandwich.getSandwichId());
+                    }
+                }
+
+                for (Chips chips : order.getChips()) {
+                    String chipsSql = "INSERT INTO chips_order (order_id, chip_id) VALUES (?, ?)";
+                    PreparedStatement chipsStmt = connection.prepareStatement(chipsSql);
+                    chipsStmt.setInt(1, orderId);
+                    chipsStmt.setInt(2, chips.getChipsId());
+                    chipsStmt.executeUpdate();
+                }
+
+                for (Drinks drink : order.getDrinks()) {
+                    String drinksSql = "INSERT INTO drink_order (order_id, drink_id) VALUES (?, ?)";
+                    PreparedStatement drinksStmt = connection.prepareStatement(drinksSql);
+                    drinksStmt.setInt(1, orderId);
+                    drinksStmt.setInt(2, drink.getDrinkId());
+                    drinksStmt.executeUpdate();
+                }
+
                 order.setOrderId(orderId);
+                order.setOrderPrice(totalOrderPrice);
+                return order;
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
-        return order;
-    }
-
-    @Override
-    public void update(int orderId, Orders order)
-    {
-        try (Connection connection = getConnection()) {
-            String sql = """
-                    UPDATE orders
-                    SET sandwich_id = ?, drink_id = ?, order_date = ?, size = ?, price = ?
-                    WHERE order_id = ?
-                    """;
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, order.getSandwichId());
-            statement.setInt(2, order.getDrinkId());
-            statement.setDate(3, Date.valueOf(order.getOrderDate()));
-            statement.setInt(4, order.getSize());
-            statement.setDouble(5, order.getPrice());
-            statement.setInt(6, order.getOrderId());
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void delete(int orderId)
-    {
-
+        return null;
     }
 
 }
